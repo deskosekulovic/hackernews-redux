@@ -5,18 +5,8 @@ import Paginator from './Paginator.jsx';
 import { setTitle, watchList } from '../utilities/helper.jsx';
 import { fetchItemsFromTypes } from '../actions';
 import { connect } from 'react-redux';
-
 import Spinner from './Spinner.jsx';
 import Delay from './DelayComponent.jsx';
-
-// const getData = (basePath, name, fetchItemsFromTypes, page) => {
-//     fetchItemsFromTypes(basePath, name, page, false);
-//     setInterval(()=>{
-//         console.log("timer");
-//         fetchItemsFromTypes(basePath, name, page, true);
-//     }, 60000);
-// };
-
 
 class Main extends Component {
     constructor(props) {
@@ -31,11 +21,6 @@ class Main extends Component {
         fetchItemsFromTypes(basePath, name, page, false, null);
 
         this.unwatch = watchList(name, ids=>fetchItemsFromTypes(basePath, name, page, true, ids));
-        // this.timer = setInterval(()=>{
-        //     console.log('timer');
-        //     fetchItemsFromTypes(basePath, name, page, true);
-        // }, 60000);
-        // getData(basePath, name, fetchItemsFromTypes, page);
     }
 
     componentWillReceiveProps(nextProps){
@@ -47,11 +32,6 @@ class Main extends Component {
             fetchItemsFromTypes(basePath, name, nextPage, false, null);
 
             this.unwatch = watchList(name, ids=>fetchItemsFromTypes(basePath, name, nextPage, true, ids));
-            // this.timer = setInterval(()=>{
-            //     console.log('timer');
-            //     fetchItemsFromTypes(basePath, name, nextPage, true);
-            // }, 60000);
-            // getData(basePath, name, fetchItemsFromTypes, nextPage);
         }
     }
 
