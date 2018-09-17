@@ -63,6 +63,12 @@ export const fetchData = (name, id) => dispatch => {
     });
 };
 
+export const toggleVisible = id => dispatch => {
+    let el = store.getState().stories.items[id];
+    el = Object.assign({}, el, {visible: !el.visible});
+    dispatch(setItems(SET_ITEMS, {[el.id]:el}));
+};
+
 export const fetching = () => ({
     type: FETCHING_DATA
 });

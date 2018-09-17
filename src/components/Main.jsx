@@ -9,9 +9,6 @@ import Spinner from './Spinner.jsx';
 import Delay from './DelayComponent.jsx';
 
 class Main extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount(){
         const page = parseInt(this.props.match.params.ids,10) || 1;

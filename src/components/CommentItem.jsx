@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 import ComponentAnimation from '../styles/ComponentAnimation.jsx';
 import { TextToggle, ToggleMeta } from '../styles/CommentItem.jsx';
+import { connect } from 'react-redux';
+import { toggleVisible } from '../actions';
 
 
 const CommentItem = ({ data, item, toggleVisible }) => {
@@ -39,4 +41,4 @@ CommentItem.propTypes = {
     toggleVisible: PropTypes.func.isRequired
 };
 
-export default CommentItem;
+export default connect(null, { toggleVisible })(CommentItem);
