@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 
-export const Title = styled.div`
-    font-size: ${(props) => props.theme.titleFontSize};
-    a {
-      color: ${(props) => props.theme.primaryColor};
-    }
-`;
-
 export const Data = styled.div`
+    font-size: ${(props) => props.title && props.theme.titleFontSize};
     a {
+      color: ${(props) => props.title ? props.theme.primaryColor : props.theme.linkColor};
+    }
+    span {
       color: ${(props) => props.theme.linkColor};
     }
 `;

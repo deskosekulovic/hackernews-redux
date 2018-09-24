@@ -2,29 +2,48 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 import { get_host } from '../utilities/helper.jsx';
-import StyledItem, { Title, Data } from '../styles/Item.jsx';
+import StyledItem, { Data } from '../styles/Item.jsx';
 import PropTypes from 'prop-types';
 
 const Item = ({ item }) => (
     <StyledItem>
         {
-            item.url ? <Title>
-                <Link to={item.url} target='_blank' rel='noopener'>{item.title}</Link> <span>({get_host(item.url)})</span>
-            </Title> :
-                <Title>
-                    <Link to={`/item/${item.id}`} >{item.title}</Link>
-                </Title>
+            item.url ?
+                <Data title='title'>
+                    <Link
+                        to={item.url}
+                        target='_blank'
+                        rel='noopener'
+                    >
+                        {item.title}
+                    </Link>
+                    <span> ({get_host(item.url)}) </span>
+                </Data>
+                :
+                <Data title='title'>
+                    <Link to={`/item/${item.id}`}>
+                        {item.title}
+                    </Link>
+                </Data>
         }
         <Data>
             {
-                item.type === 'job' ? <span><TimeAgo date={new Date(item.time*1000)} /></span>
-                    : <div>
+                item.type === 'job' ?
+                    <span><TimeAgo date={new Date(item.time*1000)} /></span>
+                    :
+                    <div>
                         <span>{item.score} points</span>{'  '}
-                        <span>by <Link to={`/user/${item.by}`} ><b>{item.by}</b></Link></span>{'  '}
-                        <span><TimeAgo date={new Date(item.time*1000)} /></span>{' | '}
-                        <span><Link to={`/item/${item.id}`} >
-                            {item.descendants > 0 ? `${item.descendants} comments` : 'discuss'}
-                        </Link></span>
+                        <span>
+                            by <Link to={`/user/${item.by}`} ><b>{item.by}</b></Link>
+                        </span>{'  '}
+                        <span>
+                            <TimeAgo date={new Date(item.time*1000)} />
+                        </span>{' | '}
+                        <span>
+                            <Link to={`/item/${item.id}`} >
+                                {item.descendants > 0 ? `${item.descendants} comments` : 'discuss'}
+                            </Link>
+                        </span>
                     </div>
             }
         </Data>

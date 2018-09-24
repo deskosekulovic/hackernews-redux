@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ListItems from './ListItems.jsx';
 import Paginator from './Paginator.jsx';
-import { setTitle, watchList } from '../utilities/helper.jsx';
+import { setTitle } from '../utilities/helper.jsx';
+import { watchList } from '../api';
 import { fetchItemsFromTypes } from '../actions';
 import { connect } from 'react-redux';
 import Spinner from './Spinner.jsx';
@@ -11,24 +12,24 @@ import Delay from './DelayComponent.jsx';
 class Main extends Component {
 
     componentDidMount(){
-        const page = parseInt(this.props.match.params.ids,10) || 1;
-        const { basePath, name, fetchItemsFromTypes } = this.props;
+        const { basePath, name, match, fetchItemsFromTypes } = this.props;
+        const page = parseInt(match.params.ids, 10) || 1;
 
         setTitle(page, basePath);
         fetchItemsFromTypes(basePath, name, page, false, null);
 
-        this.unwatch = watchList(name, ids=>fetchItemsFromTypes(basePath, name, page, true, ids));
+        this.unwatch = watchList(name, ids => fetchItemsFromTypes(basePath, name, page, true, ids));
     }
 
     componentWillReceiveProps(nextProps){
-        const nextPage = parseInt(nextProps.match.params.ids,10) || 1;
-        const page = parseInt(this.props.match.params.ids,10) || 1;
+        const nextPage = parseInt(nextProps.match.params.ids, 10) || 1;
+        const page = parseInt(this.props.match.params.ids, 10) || 1;
         const { basePath, name, fetchItemsFromTypes } = nextProps;
         if(page !== nextPage) {
             this.unwatch();
             fetchItemsFromTypes(basePath, name, nextPage, false, null);
 
-            this.unwatch = watchList(name, ids=>fetchItemsFromTypes(basePath, name, nextPage, true, ids));
+            this.unwatch = watchList(name, ids => fetchItemsFromTypes(basePath, name, nextPage, true, ids));
         }
     }
 
@@ -37,15 +38,20 @@ class Main extends Component {
     }
 
     render(){
-        const { data, totalItems, loading, basePath } = this.props;
-        const page = parseInt(this.props.match.params.ids,10) || 1;
+        const { data, totalItems, loading, basePath, match } = this.props;
+        const page = parseInt(match.params.ids, 10) || 1;
         return(
             <main>
-                {loading===true ? <Delay wait={200}><Spinner /></Delay> :
-                    <div>
+                {loading===true ?
+                    <Delay wait={200}><Spinner /></Delay> :
+                    <React.Fragment>
                         <ListItems page={page} data={data} />
-                        <Paginator page={page} totalItems={totalItems} basePath={basePath} />
-                    </div>
+                        <Paginator
+                            page={page}
+                            totalItems={totalItems}
+                            basePath={basePath}
+                        />
+                    </React.Fragment>
                 }
             </main>
         );
@@ -53,7 +59,7 @@ class Main extends Component {
 
 }
 
-const mapStateToProps = (state, props) =>{
+const mapStateToProps = (state, props) => {
     let { activeItems, items, loading } = state.stories;
     let data = activeItems.map(i => items[i]).filter(i => !!i && !!i.id);
     return {

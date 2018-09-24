@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider, injectGlobal } from 'styled-components';
-import StyledApp, { theme } from './styles/App.jsx';
+import StyledApp from './styles/App.jsx';
+import theme from './styles';
 
 import { TopStories, NewStories, ShowStories, AskStories, JobsStories } from './StoriesBuilder';
 import Navigation from './components/Navigation.jsx';

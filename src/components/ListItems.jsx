@@ -2,15 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Item from './Item.jsx';
 
-const ListItems = ({ page, data }) => (
+const ListItems = ({ page, data }) =>
     <ol start={(page - 1)*30+1}>
         {data && data.map((item) => {
             return (
-                item.id && item!==null && <Item key={item.id} item={item} />
+                item.id &&
+                item!==null &&
+                <Item key={item.id} item={item} />
             );
         })}
-    </ol>
-);
+    </ol>;
 
 ListItems.propTypes = {
     page: PropTypes.number.isRequired,

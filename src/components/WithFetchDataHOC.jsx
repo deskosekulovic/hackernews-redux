@@ -6,15 +6,15 @@ import { fetchData } from '../actions';
 
 const WithFetchData = MyComponent => {
     class Container extends Component {
-        
-        componentDidMount(){
+
+        componentDidMount() {
             const { match, name, fetchData } = this.props;
             window.scrollTo(0, 0);
             setTitle(match.params.ids, match.params.ids);
             fetchData(name, match.params.ids);
         }
 
-        render(){
+        render() {
             return <MyComponent {...this.props}  />;
         }
     }

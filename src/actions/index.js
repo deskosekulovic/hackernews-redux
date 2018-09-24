@@ -1,9 +1,7 @@
 import { store } from '../store/configureStore';
 import { FETCHING_DATA, SET_ITEMS, SET_ACTIVE_ITEMS, TIMESTAMP } from '../constants';
-import { fetchIds, fetchItems, fetchItem } from '../utilities/helper.jsx';
-
-const arrayToObject = (arr, keyField) =>
-    Object.assign({}, ...arr.map(item => item && !item.deleted && !item.dead && ({[item[keyField]]: item})));
+import { fetchIds, fetchItems, fetchItem } from '../api';
+import { arrayToObject } from '../utilities/helper.jsx';
 
 export const fetchItemsFromTypes = (basePath, name, page, update, newIds) => dispatch => {
     const now = Date.now();
@@ -39,15 +37,15 @@ export const fetchItemsFromTypes = (basePath, name, page, update, newIds) => dis
     });
 };
 
-export const fetchKids = (data) => dispatch => {
-    if(data.length>0){
-        let children=[];
-        data.map(item=> {
+export const fetchKids = data => dispatch => {
+    if(data.length > 0){
+        let children = [];
+        data.map(item => {
             if(item.kids){
                 children=[...children,...item.kids];
             }
         });
-        children.length>0 && fetchItems(children).then(items=>{
+        children.length > 0 && fetchItems(children).then(items=>{
             let arr = arrayToObject(items, 'id');
             dispatch(setItems(SET_ITEMS, arr));
             dispatch(fetchKids(items));

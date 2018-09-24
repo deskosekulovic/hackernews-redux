@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import CommentItems from './CommentItems.jsx';
 import CommentMeta from './CommentMeta.jsx';
 import StyledComments from '../styles/Comments.jsx';
-import { ThemeProvider } from 'styled-components';
-import { theme } from '../styles/App.jsx';
 import WithFetchData from './WithFetchDataHOC.jsx';
 
 const Comments = props => {
-    const { items } = props;
-    const index = props.match.params.ids;
+    const { items, match } = props;
+    const index = match.params.ids;
     return (
         items[index]!==undefined &&
-        <ThemeProvider theme={theme}>
             <StyledComments key={index}>
                 <CommentMeta data={items[index]} />
-                <CommentItems index={index} items={[items[index]]} kids={items[index].kids} />
+                <CommentItems
+                    index={index}
+                    items={[items[index]]}
+                    kids={items[index].kids}
+                />
             </StyledComments>
-        </ThemeProvider>
     );
 };
 

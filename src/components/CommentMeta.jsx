@@ -4,30 +4,50 @@ import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 import { get_host } from '../utilities/helper.jsx';
 import ComponentAnimation from '../styles/ComponentAnimation.jsx';
-import { Title } from '../styles/CommentMeta.jsx';
+import { Data } from '../styles/Item.jsx';
 
-const CommentMeta = ({ data }) =>(
+const CommentMeta = ({ data }) =>
     <ComponentAnimation key={data.id}>
         {
-            data.url ? <Title>
-                <Link to={data.url} target="_blank" rel="noopener"><b>{data.title}</b></Link> <span>({get_host(data.url)})</span>
-            </Title> :
-                <Title>
-                    <Link to={`/item/${data.id}`}>{data.title}</Link>
-                </Title>
+            data.url ?
+                <Data title='title'>
+                    <Link
+                        to={data.url}
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        <b>{data.title}</b>
+                    </Link>
+                    <span> ({get_host(data.url)}) </span>
+                </Data>
+                :
+                <Data title='title'>
+                    <Link to={`/item/${data.id}`}>
+                        {data.title}
+                    </Link>
+                </Data>
         }
         {
-            <div>
-                <span>{data.score} points</span>{'  '}
-                <span>by <Link to={`/user/${data.by}`} ><b>{data.by}</b></Link></span>{'  '}
-                <span><TimeAgo date={new Date(data.time*1000)} /></span>{' | '}
-                <span><Link to={`/item/${data.id}`}>{data.descendants} comments</Link></span>
+            <Data>
+                <span>
+                    {data.score} points
+                </span>{'  '}
+                <span>
+                  by <Link to={`/user/${data.by}`} ><b>{data.by}</b></Link>
+                </span>{'  '}
+                <span>
+                    <TimeAgo date={new Date(data.time*1000)} />
+                </span>{' | '}
+                <span>
+                    <Link to={`/item/${data.id}`}>
+                        {data.descendants} comments
+                    </Link>
+                </span>
                 {data.text && <p dangerouslySetInnerHTML={{ __html: data.text }} />}
-            </div>
+            </Data>
         }
 
-    </ComponentAnimation>
-);
+    </ComponentAnimation>;
 
 CommentMeta.propTypes = {
     data: PropTypes.shape({

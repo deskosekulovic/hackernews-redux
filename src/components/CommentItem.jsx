@@ -13,15 +13,32 @@ const CommentItem = ({ data, item, toggleVisible }) => {
     return(
         <ComponentAnimation key={id} id={id}>
             <div>
-                <ToggleMeta onClick={()=>toggleVisible(id)} >{visible ? '[-]' : '[+]'} </ToggleMeta><Link to={`/user/${by}`} ><b>{by}</b></Link>{'  '}
-                <span><TimeAgo date={new Date(time*1000)} /></span>
+                <ToggleMeta
+                    onClick={()=>toggleVisible(id)}
+                >
+                    {visible ? ' [-] ' : ' [+] '}
+                </ToggleMeta>
+                <Link to={`/user/${by}`} ><b>{by}</b></Link>{'  '}
+                <span>
+                    <TimeAgo date={new Date(time*1000)} />
+                </span>
             </div>
             <TextToggle visible={visible}>
-                <div className='text' dangerouslySetInnerHTML={{ __html: text }} />
+                <div
+                    className='text'
+                    dangerouslySetInnerHTML={{ __html: text }}
+                />
                 <p>reply</p>
                 {
                     kids && kids.map(kid=> data[kid]!==undefined &&
-                            <CommentItem key={kid} id={kid} item={data[kid]} index={data[kid].parent} data={data} toggleVisible={toggleVisible} />
+                            <CommentItem
+                                key={kid}
+                                id={kid}
+                                item={data[kid]}
+                                index={data[kid].parent}
+                                data={data}
+                                toggleVisible={toggleVisible}
+                            />
                     )
                 }
             </TextToggle>
