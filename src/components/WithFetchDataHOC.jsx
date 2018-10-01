@@ -5,36 +5,33 @@ import { setTitle } from '../utilities/helper.jsx';
 import { fetchData } from '../actions';
 
 const WithFetchData = MyComponent => {
-    class Container extends Component {
-
-        componentDidMount() {
-            const { match, name, fetchData } = this.props;
-            window.scrollTo(0, 0);
-            setTitle(match.params.ids, match.params.ids);
-            fetchData(name, match.params.ids);
-        }
-
-        render() {
-            return <MyComponent {...this.props}  />;
-        }
+  class Container extends Component {
+    componentDidMount() {
+      const { match, name, fetchData } = this.props;
+      window.scrollTo(0, 0);
+      setTitle(match.params.ids, match.params.ids);
+      fetchData(name, match.params.ids);
     }
 
-    Container.propTypes = {
-        match: PropTypes.object.isRequired,
-        fetchData: PropTypes.func.isRequired,
-        loading: PropTypes.bool,
-        name: PropTypes.string.isRequired
-    };
+    render() {
+      return <MyComponent {...this.props} />;
+    }
+  }
 
-    const mapStateToProps = state => state.stories;
+  Container.propTypes = {
+    match: PropTypes.object.isRequired,
+    fetchData: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
+    name: PropTypes.string.isRequired
+  };
 
-    const mapDispatchToProps = {
-        fetchData
-    };
+  const mapStateToProps = state => state.stories;
 
-    return connect(mapStateToProps, mapDispatchToProps)(Container);
+  const mapDispatchToProps = {
+    fetchData
+  };
 
+  return connect(mapStateToProps, mapDispatchToProps)(Container);
 };
-
 
 export default WithFetchData;

@@ -6,9 +6,10 @@ import { store } from './store/configureStore';
 import App from './App';
 
 ReactDOM.render(
-    <Provider store={store}>
-        <Router>
-            <App />
-        </Router>
-    </Provider>,document.getElementById('root')
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
+  document.getElementById('root')
 );

@@ -7,34 +7,35 @@ import { UserItem } from '../styles/User.jsx';
 import WithFetchData from './WithFetchDataHOC.jsx';
 
 const User = props => {
-    const { items, loading, match } = props;
-    const index = match.params.ids;
-    return (
-        loading ?
-            <Spinner /> :
-            items[index]!==undefined &&
-              <ComponentAnimation>
-                  <UserItem>
-                    user: <b>{items[index].id}</b>
-                  </UserItem>
-                  <UserItem>
-                    created: <TimeAgo date={items[index].created*1000} />
-                  </UserItem>
-                  <UserItem>
-                    karma: {items[index].karma}
-                  </UserItem>
-                  {items[index].about &&
-                    <UserItem>
-                      about: <span dangerouslySetInnerHTML={{ __html: items[index].about }} />
-                    </UserItem>}
-              </ComponentAnimation>
-    );
+  const { items, loading, match } = props;
+  const index = match.params.ids;
+  return loading ? (
+    <Spinner />
+  ) : (
+    items[index] !== undefined && (
+      <ComponentAnimation>
+        <UserItem>
+          user: <b>{items[index].id}</b>
+        </UserItem>
+        <UserItem>
+          created: <TimeAgo date={items[index].created * 1000} />
+        </UserItem>
+        <UserItem>karma: {items[index].karma}</UserItem>
+        {items[index].about && (
+          <UserItem>
+            about:{' '}
+            <span dangerouslySetInnerHTML={{ __html: items[index].about }} />
+          </UserItem>
+        )}
+      </ComponentAnimation>
+    )
+  );
 };
 
 User.propTypes = {
-    match: PropTypes.object.isRequired,
-    items: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired
+  match: PropTypes.object.isRequired,
+  items: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 export default WithFetchData(User);

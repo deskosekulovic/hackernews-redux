@@ -1,31 +1,42 @@
-import { FETCHING_DATA, SET_ITEMS, SET_ACTIVE_ITEMS, TIMESTAMP } from '../constants';
+import {
+  FETCHING_DATA,
+  SET_ITEMS,
+  SET_ACTIVE_ITEMS,
+  TIMESTAMP
+} from '../constants';
 
 const initState = {
-    loading: false,
-    activeItems: [],
-    items: {},
-    news: [],
-    newest: [],
-    show: [],
-    ask: [],
-    jobs: [],
-    timestamps: {}
+  loading: false,
+  activeItems: [],
+  items: {},
+  news: [],
+  newest: [],
+  show: [],
+  ask: [],
+  jobs: [],
+  timestamps: {},
+  itemsPerPage: 20
 };
 
 const stories = (state = initState, action) => {
-    switch (action.type) {
-    case FETCHING_DATA:
-        return {...state, loading: true};
-    case SET_ITEMS:
-        return {...state, loading: false, items: {...state.items,...action.data}};
-    case SET_ACTIVE_ITEMS:
-        return {...state, activeItems: action.data};
-    case TIMESTAMP:
-        return {...state, timestamps: {...state.timestamps, ...action.data}};
-    case `${action.type}`:
-        return {
-            ...state, [`${action.type.toLowerCase()}`]: action.ids
-        };
+  switch (action.type) {
+  case FETCHING_DATA:
+    return { ...state, loading: true };
+  case SET_ITEMS:
+    return {
+      ...state,
+      loading: false,
+      items: { ...state.items, ...action.data }
+    };
+  case SET_ACTIVE_ITEMS:
+    return { ...state, activeItems: action.data };
+  case TIMESTAMP:
+    return { ...state, timestamps: { ...state.timestamps, ...action.data } };
+  case `${action.type}`:
+    return {
+      ...state,
+      [`${action.type.toLowerCase()}`]: action.ids
+    };
     // case NEWS:
     //     return {...state, news: action.ids};
     // case NEWEST:
@@ -36,9 +47,9 @@ const stories = (state = initState, action) => {
     //     return {...state, ask: action.ids};
     // case JOBS:
     //     return {...state, jobs: action.ids};
-    default:
-        return state;
-    }
+  default:
+    return state;
+  }
 };
 
 export default stories;
