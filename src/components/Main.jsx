@@ -22,17 +22,17 @@ class Main extends Component {
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    const nextPage = parseInt(nextProps.match.params.ids, 10) || 1;
-    const page = parseInt(this.props.match.params.ids, 10) || 1;
-    const { basePath, name, fetchItemsFromTypes, itemsPerPage } = nextProps;
-    if (page !== nextPage) {
+  componentDidUpdate(prevProps) {
+    const { basePath, name, fetchItemsFromTypes, itemsPerPage, match } = this.props;
+    const prevPage = parseInt(prevProps.match.params.ids, 10) || 1;
+    const page = parseInt(match.params.ids, 10) || 1;
+    if (page !== prevPage) {
       window.scrollTo(0, 0);
       this.unwatch();
-      fetchItemsFromTypes(basePath, name, nextPage, itemsPerPage, false, null);
+      fetchItemsFromTypes(basePath, name, page, itemsPerPage, false, null);
 
       this.unwatch = watchList(name, ids =>
-        fetchItemsFromTypes(basePath, name, nextPage, itemsPerPage, true, ids)
+        fetchItemsFromTypes(basePath, name, page, itemsPerPage, true, ids)
       );
     }
   }
